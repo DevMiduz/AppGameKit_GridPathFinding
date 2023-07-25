@@ -28,12 +28,47 @@
 
 /*
 
+	FUNCTIONS
+	
+*/
+
+function InitGame(grid ref as Grid)
+    grid.tileSize = 8
+    grid.width = 20
+    grid.height = 10
+    
+    initGrid(grid)
+endfunction
+
+/*
+
 	MAIN PROGRAM
 
 */
 
+InitEngine()
+
+global blocksImage as integer
+blocksImage = LoadImage("pathfinding_blocks.png")
+
+global gGrid as Grid
+global gVisited as Tile[]
+
+InitGame(gGrid)
 
 do
     Print( ScreenFPS() )
+    
+    if(GetPointerPressed())
+    		tileX as integer
+    		tileY as integer
+    		
+    		tileX = GetPointerX() / gGrid.tileSize
+    		tileY = GetPointerY() / gGrid.tileSize
+    
+		resetDistances(gGrid)
+		pathfindingLoop(gGrid.tiles[tileX, tileY], gGrid)
+    endif
+    
     Sync()
 loop
